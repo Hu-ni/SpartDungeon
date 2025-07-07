@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Items>
+	<Item>
+		<ID>1</ID>
+		<Name>Health Potion</Name>
+		<Description>Restores 50 HP</Description>
+		<Value>100</Value>
+		<>
+	</Item>
+	<Item>
+		<ID>2</ID>
+		<Name>Mana Potion</Name>
+		<Description>Restores 30 MP</Description>
+		<Value>120</Value>
+	</Item>
+</Items>

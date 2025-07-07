@@ -8,10 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dungeon\" />
-    <Folder Include="Shop\" />
-    <Folder Include="User\Controller\" />
-    <Folder Include="User\View\" />
+    <Folder Include="Data\SaveData\" />
+    <Folder Include="Domain\Dungeon\Controller\" />
+    <Folder Include="Domain\Dungeon\View\" />
   </ItemGroup>
 
 </Project>

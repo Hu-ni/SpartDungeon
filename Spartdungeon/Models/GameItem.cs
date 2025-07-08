@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Spartdungeon.Domain.Item.Model
+namespace Spartdungeon.Models
 {
-    [XmlInclude(typeof(EquipItem))]
     public class GameItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+        public bool IsSellable {  get; set; }
         public GameItem() { }
     }
 }

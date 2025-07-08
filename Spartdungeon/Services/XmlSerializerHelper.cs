@@ -16,7 +16,9 @@ namespace Spartdungeon.Services
         /// </summary>
         public static T Deserialize<T>(string filePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(T), "");
+
+
             using (FileStream fs = new FileStream(filePath, FileMode.Open))
             {
                 return (T)serializer.Deserialize(fs);
@@ -28,7 +30,7 @@ namespace Spartdungeon.Services
         /// </summary>
         public static void Serialize<T>(T obj, string filePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(T), "");
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 serializer.Serialize(fs, obj);
@@ -41,7 +43,7 @@ namespace Spartdungeon.Services
         /// </summary>
         public static T DeserializeFromString<T>(string xml)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(T), "");
             using (StringReader reader = new StringReader(xml))
             {
                 return (T)serializer.Deserialize(reader);
@@ -54,7 +56,7 @@ namespace Spartdungeon.Services
         /// </summary>
         public static string SerializeToString<T>(T obj)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(T), "");
             using (StringWriter writer = new StringWriter())
             {
                 serializer.Serialize(writer, obj);

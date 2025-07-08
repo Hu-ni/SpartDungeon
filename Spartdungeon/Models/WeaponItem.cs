@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Spartdungeon.Domain.Item.Model
+namespace Spartdungeon.Models
 {
     public enum WeaponType
     {

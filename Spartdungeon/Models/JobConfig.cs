@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spartdungeon.Domain.Character.Common
+namespace Spartdungeon.Models
 {
     public class JobConfig
     {

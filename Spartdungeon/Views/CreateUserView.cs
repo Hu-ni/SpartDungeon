@@ -1,6 +1,5 @@
-﻿using Spartdungeon.Domain.Character.Common;
-using Spartdungeon.Game;
-using Spartdungeon.Game.Input;
+﻿using Spartdungeon.Models;
+using Spartdungeon.Resources;
 using Spartdungeon.Services;
 using System;
 using System.Collections.Generic;
@@ -8,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spartdungeon.Domain.Character.View
+namespace Spartdungeon.Views
 {
     public class CreateUserView
     {
-        public Player CreatePlayer()
+        public Player CreateUser()
         {
             Console.Clear();
 
@@ -30,7 +29,7 @@ namespace Spartdungeon.Domain.Character.View
 
             Job job;
             int num = InputManager.Instance.ReadLineInt();
-            
+
             if (num == -1)
                 job = Job.Warrior;
             else

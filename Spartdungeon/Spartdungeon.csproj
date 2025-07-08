@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Data\SaveData\" />
-    <Folder Include="Domain\Dungeon\Controller\" />
-    <Folder Include="Domain\Dungeon\View\" />
   </ItemGroup>
 
 </Project>

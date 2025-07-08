@@ -1,4 +1,6 @@
-﻿using Spartdungeon.Domain.Character.View;
+﻿using Spartdungeon.Controllers;
+using Spartdungeon.Models;
+using System.Xml.Serialization;
 
 namespace Spartdungeon
 {
@@ -23,8 +25,19 @@ namespace Spartdungeon
              * 입력에 따라 User, Dungeon, Shop로 이동
             */
             //while(true){ }
-            CreateUserView createUserView = new CreateUserView();
-            createUserView.CreatePlayer();
+            //var myItemList = new ItemList();
+            //myItemList.Items.Add(new WeaponItem { Id = 1, Name = "Sword of Valor", Description = "강력한 검입니다.", IsSellable = true, Status = new ItemStatus() { Attack = 15, Defense = 2 }, Price = 250, Type = WeaponType.Swoard });
+
+            //var serializer = new XmlSerializer(typeof(ItemList));
+            //var ns = new XmlSerializerNamespaces();
+            //ns.Add("", "");
+
+            //using (var fs = new FileStream("Items.xml", FileMode.Create))
+            //{
+            //    serializer.Serialize(fs, myItemList, ns);
+            //}
+            MainController main = new MainController();
+            main.Run();
             return;
         }
     }

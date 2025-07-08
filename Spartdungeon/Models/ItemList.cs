@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Spartdungeon.Domain.Item.Model
+namespace Spartdungeon.Models
 {
-    [XmlRoot("Items")]
+    //모든 아이템 리스트
+    [XmlRoot("Items", Namespace = "")]
     [XmlInclude(typeof(EquipItem))]
+    [XmlInclude(typeof(WeaponItem))]
+    [XmlInclude(typeof(ArmorItem))]
     public class ItemList
     {
         // 1. 아이템 XML 파싱하여 데이터 불러오기
@@ -18,9 +21,14 @@ namespace Spartdungeon.Domain.Item.Model
         [XmlElement("Item")]
         public List<GameItem> Items { get; private set; }
 
+        public ItemList()
+        {
+            Items = new List<GameItem>();
+        }
+
         public void Initialize()
         {
-            Items = XmlSerializerHelper.Deserialize<List<GameItem>>(Strings.FILE_ITEM_PATH);
+            Items = XmlSerializerHelper.Deserialize<ItemList>(Strings.FILE_ITEM_PATH).Items;
         }
 
         public GameItem GetItem(int id)

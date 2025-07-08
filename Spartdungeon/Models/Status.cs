@@ -1,4 +1,7 @@
-﻿namespace Spartdungeon.Domain.Character.Common
+﻿using Spartdungeon.Resources;
+using System.Xml.Serialization;
+
+namespace Spartdungeon.Models
 {
     public class Status
     {
@@ -7,10 +10,26 @@
         public float Attack { get; private set; }
         public float Defense { get; private set; }
 
+        public float CurrHealth { get; private set; }
+
         // 장비에 따른 스탯 증가
         public float BonusHealth { get; private set; }
         public float BonusAttack { get; private set; }
         public float BonusDefense { get; private set; }
+
+
+        // 최종 스텟
+        public float FinalAttack { get { return Attack + BonusAttack; } }
+        public float FinalDefense { get { return Defense + BonusDefense; } }
+
+        [XmlIgnore]
+        public float MaxHealth
+        {
+            get
+            {
+                return BonusHealth + CurrHealth;
+            }
+        }
 
         public Status(JobConfig config)
         {
@@ -22,17 +41,19 @@
             BonusAttack = 0;
             BonusDefense = 0;
 
+            CurrHealth = Health;
         }
 
-        public Status(Status status, JobConfig config)
+        public Status(float currHealth, float health, float attack, float defense, float bonusHealth, float bonusAttack, float bonusDefense)
         {
-            Health = status.Health;
-            Attack = status.Attack;
-            Defense = status.Defense;
+            CurrHealth = currHealth;
+            Health = health;
+            Attack = attack;
+            Defense = defense;
 
-            BonusHealth = status.BonusHealth;
-            BonusAttack = status.BonusAttack;
-            BonusDefense = status.BonusDefense;
+            BonusHealth = bonusHealth;
+            BonusAttack = bonusAttack;
+            BonusDefense = bonusDefense;
         }
 
         public void IncrementStatus(Job job)
@@ -57,5 +78,9 @@
             BonusDefense -= defense;
         }
 
+        public void TakeDamage(float amount)
+        {
+            CurrHealth -= amount;
+        }
     }
 }

@@ -1,15 +1,16 @@
-﻿using Spartdungeon.Domain.Character.Common;
-using Spartdungeon.Domain.Item.Model;
+﻿using Spartdungeon.Resources;
+using Spartdungeon.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spartdungeon.Game
+namespace Spartdungeon.Models
 {
     public class Player
     {
+
         public string Name { get; private set; }
         public Level Level { get; private set; }
         public Job Job { get; private set; }
@@ -22,6 +23,15 @@ namespace Spartdungeon.Game
             var config = JobConfigTable.Configs[job];
             Status = new Status(config);
             Level = new Level();
+        }
+
+        public Player(SaveData data)
+        {
+            Name = data.Name;
+            Level = data.Level;
+            Job = data.Job;
+            Money = data.Money;
+            Status = data.Status;
         }
 
         public void GainExp(int exp)
@@ -46,12 +56,17 @@ namespace Spartdungeon.Game
 
         public void EquipItem(EquipItem item)
         {
-            Status.ApplyEquipItem(item.Health, item.Attack, item.Defense);
+            Status.ApplyEquipItem(item.Status.Health, item.Status.Attack, item.Status.Defense);
         }
 
         public void UnequipItem(EquipItem item)
         {
-            Status.ApplyUnEquipItem(item.Health, item.Attack, item.Defense);
+            Status.ApplyUnEquipItem(item.Status.Health, item.Status.Attack, item.Status.Defense);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            Status.TakeDamage(damage);
         }
 
         public void GainMoney(int money)
@@ -62,6 +77,25 @@ namespace Spartdungeon.Game
         public void UseMoney(int amount)
         {
             Money -= amount;
+        }
+
+        public string JobToString()
+        {
+            switch (Job)
+            {
+                case Job.Warrior:
+                    return "전사";
+                case Job.Mage:
+                    return "마법사";
+                case Job.Archer:
+                    return "궁수";
+                case Job.Thief:
+                    return "도적";
+                case Job.Priest:
+                    return "사제";
+                default:
+                    return "무직";
+            }
         }
     }
 }

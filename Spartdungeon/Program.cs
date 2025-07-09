@@ -36,6 +36,43 @@ namespace Spartdungeon
             //{
             //    serializer.Serialize(fs, myItemList, ns);
             //}
+            //var myDungeonList = new DungeonList();
+            //myDungeonList.gameDungeons.Add(new GameDungeon 
+            //{ 
+            //    Id = 1, 
+            //    Name = "쉬운 던전", 
+            //    Description = "제일 쉬운 던전입니다.", 
+            //    Difficult= 5, 
+            //    Gold = 1000,
+            //    ItemIds = new List<int>()
+            //});
+            //myDungeonList.gameDungeons.Add(new GameDungeon
+            //{
+            //    Id = 2,
+            //    Name = "일반 던전",
+            //    Description = "일반 던전입니다.",
+            //    Difficult = 11,
+            //    Gold = 1700,
+            //    ItemIds = new List<int>()
+            //});
+            //myDungeonList.gameDungeons.Add(new GameDungeon
+            //{
+            //    Id = 3,
+            //    Name = "어려운 던전",
+            //    Description = "진짜 매우매우매우매우 어려운 던전입니다.",
+            //    Difficult = 17,
+            //    Gold = 2500,
+            //    ItemIds = new List<int>()
+            //});
+
+            //var serializer = new XmlSerializer(typeof(DungeonList));
+            //var ns = new XmlSerializerNamespaces();
+            //ns.Add("", "");
+
+            //using (var fs = new FileStream("Dungeon.xml", FileMode.Create))
+            //{
+            //    serializer.Serialize(fs, myDungeonList, ns);
+            //}
             MainController main = new MainController();
             main.Run();
             return;

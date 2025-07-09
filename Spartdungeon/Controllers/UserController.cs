@@ -1,5 +1,5 @@
-﻿using Spartdungeon.Models;
-using Spartdungeon.Services;
+﻿using Spartdungeon.DTOs;
+using Spartdungeon.Models;
 using Spartdungeon.Views;
 using System;
 using System.Collections.Generic;
@@ -53,11 +53,20 @@ namespace Spartdungeon.Controllers
         public void LoadPlayerData(SaveData data)
         {
             player = new Player(data);
+
+            WeaponItem? weapon = data.Inventory.Find(x => x.Id == data.WeaponID) as WeaponItem;
+            if(weapon != null)
+                EquipWeapon(weapon);
+            ArmorItem? armor = data.Inventory.Find(x => x.Id == data.ArmorID) as ArmorItem;
+            if(armor != null)
+                EquipArmor(armor);
         }
 
-        public void ReduceHealth(float amount)
+        public void ClearDungeon(DungeonRewardDTO dto)
         {
-            player.TakeDamage(amount);
+            player.TakeDamage(dto.ReduceHealth);
+            player.GainExp(dto.Exp);
+            player.GainMoney(dto.RewardMoney);
         }
 
         public void UnEquipArmor()
@@ -86,7 +95,35 @@ namespace Spartdungeon.Controllers
             return userInfoView.PrintUserInfo(player);
         }
 
+        public bool IsEquipmented(GameItem item) => slots.IsEquipped(item);
         public EquipmentSlots GetEquipmentSlots() => slots;
         public Player GetPlayer() => player;
+
+        public PlayerDTO GetPlayerDTO()
+        {
+            PlayerDTO dto = new PlayerDTO
+            {
+                Name = player.Name,
+                Level = player.Level.Lv,
+                Exp = player.Level.Exp,
+                job = player.Job,
+                CurrHealth = player.Status.CurrHealth,
+                Health = player.Status.Health,
+                Attack = player.Status.Attack,
+                Defense = player.Status.Defense,
+                Money = player.Money
+            };
+            return dto;
+        }
+
+        public void UseMoney(int money)
+        {
+            player.UseMoney(money);
+        }
+
+        public void GainMoney(int money)
+        {
+            player.GainMoney(money);
+        }
     }
 }

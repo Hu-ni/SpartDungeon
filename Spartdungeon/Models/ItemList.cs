@@ -26,15 +26,15 @@ namespace Spartdungeon.Models
             Items = new List<GameItem>();
         }
 
-        public void Initialize()
+        public void LoadItemListFromXml()
         {
             Items = XmlSerializerHelper.Deserialize<ItemList>(Strings.FILE_ITEM_PATH).Items;
         }
 
-        public GameItem GetItem(int id)
+        public GameItem GetItemByID(int id)
         {
-            GameItem item = Items.Find(x => x.Id == id);
-            return item;
+            return Items.FirstOrDefault(x => x.Id == id);
         }
+
     }
 }

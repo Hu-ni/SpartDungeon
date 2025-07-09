@@ -51,9 +51,11 @@ namespace Spartdungeon.Controllers
             return input;
         }
 
-        public EquipItem EquipmentItem(EquipmentSlots slots)
+        public EquipItem? EquipmentItem(EquipmentSlots slots)
         {
-            return inventoryView.Equipment(Inventory, slots);
+            int id = inventoryView.Equipment(Inventory, slots);
+            EquipItem? equipItem = Inventory.FirstOrDefault(x => x.Id == id) as EquipItem;
+            return equipItem;
         }
 
         public void AddItem(GameItem item)
@@ -61,9 +63,9 @@ namespace Spartdungeon.Controllers
             Inventory.Add(item);
         }
 
-        public void RemoveItem(int idx)
+        public void RemoveItem(GameItem item)
         {
-            Inventory.RemoveAt(idx);
+            Inventory.Remove(item);
         }
 
         public List<GameItem> GetInventory()
@@ -71,9 +73,8 @@ namespace Spartdungeon.Controllers
             return Inventory;
         }
 
-        public GameItem GetItem(int id)
+        public GameItem? GetItem(int id)
         {
-
             return Inventory.FirstOrDefault(x => x.Id == id);
         }
     }

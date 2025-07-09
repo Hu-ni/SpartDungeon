@@ -50,5 +50,18 @@ namespace Spartdungeon.Services
             int padding = (consoleWidth - text.Length) / 2;
             Console.Write(new string(' ', padding) + text);
         }
+
+        public int ReadLineIntInRange(int min, int max)
+        {
+            int value;
+            while (true)
+            {
+                value = ReadLineInt();
+                if (value >= min && value <= max)
+                    return value;
+
+                ViewHelper.PrintInvalidInput();
+            }
+        }
     }
 }

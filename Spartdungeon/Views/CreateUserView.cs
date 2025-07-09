@@ -20,21 +20,28 @@ namespace Spartdungeon.Views
             Console.Write("이름: ");
             string name = InputManager.Instance.ReadLineString();
 
-            Console.WriteLine("당신의 신도의 직업은 무엇입니까?");
-            Console.WriteLine("1. 전사");
-            Console.WriteLine("2. 마법사");
-            Console.WriteLine("3. 궁수");
-            Console.WriteLine("4. 도적");
-            Console.WriteLine("5. 사제");
-
             Job job;
-            int num = InputManager.Instance.ReadLineInt();
+            int num;
 
-            if (num == -1)
-                job = Job.Warrior;
-            else
-                job = (Job)num - 1;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine(text);
+                Console.WriteLine($"이름: {name}");
 
+                Console.WriteLine("아바타의 직업은 무엇입니까?");
+                Console.WriteLine("1. 전사");
+                Console.WriteLine("2. 마법사");
+                Console.WriteLine("3. 궁수");
+                Console.WriteLine("4. 도적");
+                Console.WriteLine("5. 사제");
+
+                
+                num = InputManager.Instance.ReadLineIntInRange(1, 5);
+            }
+            while (num == -1 || num < 1 || num > 5);
+
+            job = (Job)num - 1;
             return new Player(name, job);
         }
     }

@@ -25,9 +25,9 @@ namespace Spartdungeon.Views
                 Console.WriteLine("3. 상점");
                 Console.WriteLine("4. 던전");
 
-                input = InputManager.Instance.ReadLineInt();
+                input = InputManager.Instance.ReadLineIntInRange(1,5);
 
-            } while (input == -1 || input < 1 || input > 5);
+            } while (input == -1 || input < 1 || input > 6);
 
             return input;
         }

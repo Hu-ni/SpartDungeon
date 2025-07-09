@@ -1,5 +1,5 @@
-﻿using Spartdungeon.Resources;
-using Spartdungeon.Services;
+﻿using Spartdungeon.DTOs;
+using Spartdungeon.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +23,16 @@ namespace Spartdungeon.Models
             var config = JobConfigTable.Configs[job];
             Status = new Status(config);
             Level = new Level();
+            Money = 1500;
         }
 
         public Player(SaveData data)
         {
-            Name = data.Name;
-            Level = data.Level;
-            Job = data.Job;
-            Money = data.Money;
-            Status = data.Status;
+            Name = data.player.Name;
+            Level = new Level(data.player.Level, data.player.Exp);
+            Job = data.player.job;
+            Money = data.player.Money;
+            Status = new Status(data.player.CurrHealth, data.player.Health, data.player.Attack, data.player.Defense);
         }
 
         public void GainExp(int exp)

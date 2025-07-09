@@ -1,4 +1,5 @@
-﻿using Spartdungeon.Models;
+﻿using Spartdungeon.DTOs;
+using Spartdungeon.Models;
 using Spartdungeon.Services;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Spartdungeon.Views
 
                 foreach (EquipItem item in inventory)
                 {
-                    if (slots.WeaponSlot == item || slots.ArmorSlot == item)
+                    if (slots.WeaponSlot?.Id == item.Id || slots.ArmorSlot?.Id == item.Id)
                         Console.WriteLine($"- [E]{item.Name} | {item.EquipStatusString()} | {item.Description}");
                     else
                         Console.WriteLine($"- {item.Name} | {item.EquipStatusString()} | {item.Description}");
@@ -36,7 +37,7 @@ namespace Spartdungeon.Views
                 Console.WriteLine("1. 장착 관리");
                 Console.WriteLine("2. 나가기");
 
-                input = InputManager.Instance.ReadLineInt();
+                input = InputManager.Instance.ReadLineIntInRange(1,2);
             } while (input == -1 || input > 2);
             return input;
         }
@@ -47,55 +48,39 @@ namespace Spartdungeon.Views
         /// <param name="inventory">인벤토리 데이터</param>
         /// <param name="slots">장착된 장비</param>
         /// <returns></returns>
-        public EquipItem Equipment(List<GameItem> inventory, EquipmentSlots slots)
+        public int Equipment(List<GameItem> inventory, EquipmentSlots slots)
         {
-            //TODO: 장비 아이템이 아닌 아이템 예외 처리.
             int input;
-            EquipItem equip = null;
+
+            int[] matchingIds = new int[inventory.Count + 1];
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i] is EquipItem item)
+                {
+                    if (slots.WeaponSlot?.Id == item.Id || slots.ArmorSlot?.Id == item.Id)
+                        sb.AppendLine($"{i+1}. [E]{item.Name} | {item.EquipStatusString()} | {item.Description}");
+                    else
+                        sb.AppendLine($"{i+1}. {item.Name} | {item.EquipStatusString()} | {item.Description}");
+
+                    matchingIds[i+1] = item.Id;
+                }
+            }
 
             do
             {
                 Console.Clear();
                 Console.WriteLine("장비 목록");
-
-                List<int> mappingIndex= new List<int>();
-
-                int idx = 1;
-                for (int i = 0; i < inventory.Count; i++)
-                {
-                    if (inventory[i] is EquipItem item)
-                    {
-                        if (slots.WeaponSlot == item || slots.ArmorSlot == item)
-                            Console.WriteLine($"{idx}. [E]{item.Name} | {item.EquipStatusString()} | {item.Description}");
-                        else
-                            Console.WriteLine($"{idx}. {item.Name} | {item.EquipStatusString()} | {item.Description}");
-
-                        // 매핑 추가
-                        mappingIndex.Add(i);
-                        idx++;
-                    }
-                }
+                Console.WriteLine(sb.ToString());
+                Console.WriteLine();
 
                 Console.WriteLine("0. 나가기");
 
-                input = InputManager.Instance.ReadLineInt();
+                input = InputManager.Instance.ReadLineIntInRange(0, matchingIds.Length);
 
-                if (input == 0)
-                    return null;
+            } while (input == -1 || input < 0 || input > matchingIds.Length);
 
-                if (input >= 1 && input <= mappingIndex.Count)
-                {
-                    int inventoryIndex = mappingIndex[input - 1];
-                    equip = inventory[inventoryIndex] as EquipItem;
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다.");
-                }
-
-            } while (equip == null);
-
-            return equip;
+            return matchingIds[input];
         }
     }
 }

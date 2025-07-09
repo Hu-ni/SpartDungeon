@@ -8,12 +8,11 @@ namespace Spartdungeon.Models
 {
     public class EquipmentSlots
     {
-        public WeaponItem WeaponSlot { get; private set; }
-        public ArmorItem ArmorSlot { get; private set; }
+        public WeaponItem? WeaponSlot { get; private set; }
+        public ArmorItem? ArmorSlot { get; private set; }
 
         public EquipmentSlots()
         {
-            
         }
 
         public EquipmentSlots(WeaponItem weaponSlot, ArmorItem armorSlot)

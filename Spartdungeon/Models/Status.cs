@@ -27,8 +27,13 @@ namespace Spartdungeon.Models
         {
             get
             {
-                return BonusHealth + CurrHealth;
+                return BonusHealth + Health;
             }
+        }
+
+        public Status()
+        {
+
         }
 
         public Status(JobConfig config)
@@ -44,16 +49,12 @@ namespace Spartdungeon.Models
             CurrHealth = Health;
         }
 
-        public Status(float currHealth, float health, float attack, float defense, float bonusHealth, float bonusAttack, float bonusDefense)
+        public Status(float currHealth, float health, float attack, float defense)
         {
             CurrHealth = currHealth;
             Health = health;
             Attack = attack;
             Defense = defense;
-
-            BonusHealth = bonusHealth;
-            BonusAttack = bonusAttack;
-            BonusDefense = bonusDefense;
         }
 
         public void IncrementStatus(Job job)

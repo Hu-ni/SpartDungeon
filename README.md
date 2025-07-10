@@ -7,32 +7,11 @@ MVC 패턴을 기반으로 플레이어 생성, 인벤토리 관리, 상점, 던
 ## 📂 프로젝트 구조
 /SpartDungeon
 ├── Controllers/
-│ ├── MainController.cs
-│ ├── UserController.cs
-│ ├── InventoryController.cs
-│ ├── ShopController.cs
-│ ├── DungeonController.cs
 ├── Views/
-│ ├── MainView.cs
-│ ├── UserView.cs
-│ ├── InventoryView.cs
-│ ├── ShopView.cs
-│ ├── DungeonView.cs
+├── DTOs/
 ├── Models/
-│ ├── Player.cs
-│ ├── GameItem.cs
-│ ├── EquipItem.cs
-│ ├── WeaponItem.cs
-│ ├── ArmorItem.cs
-│ ├── EquipmentSlots.cs
-│ ├── Status.cs
-│ ├── Level.cs
-│ ├── Dungeon.cs
 ├── Resources/
-│ ├── Items.xml
-│ ├── Dungeons.xml
-├── Program.cs
-└── README.md
+
 ---
 
 ## ✅ 현재 구현된 기능

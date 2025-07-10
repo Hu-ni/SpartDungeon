@@ -4,15 +4,6 @@
 MVC 패턴을 기반으로 플레이어 생성, 인벤토리 관리, 상점, 던전 등을 구현했습니다.
 
 ---
-## 📂 프로젝트 구조
-/SpartDungeon
-├── Controllers/
-├── Views/
-├── DTOs/
-├── Models/
-├── Resources/
-
----
 
 ## ✅ 현재 구현된 기능
 

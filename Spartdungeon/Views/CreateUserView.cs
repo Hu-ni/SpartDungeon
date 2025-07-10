@@ -15,33 +15,29 @@ namespace Spartdungeon.Views
         {
             Console.Clear();
 
-            string text = Strings.CREATE_USER_NAME_1;
-            Console.WriteLine(text);
+            ViewHelper.PrintTitle("아바타 생성");
+
+            Console.WriteLine("아바타의 이름을 정해주세요.");
             Console.Write("이름: ");
-            string name = InputManager.Instance.ReadLineString();
+            string name = InputManager.ReadLineString();
 
-            Job job;
-            int num;
+            Console.Clear();
+            ViewHelper.PrintTitle("아바타 생성");
+            Console.WriteLine("아바타의 이름을 정해주세요.");
+            Console.WriteLine($"이름: {name}");
+            ViewHelper.PrintDivider();
+            Console.WriteLine();
 
-            do
-            {
-                Console.Clear();
-                Console.WriteLine(text);
-                Console.WriteLine($"이름: {name}");
-
-                Console.WriteLine("아바타의 직업은 무엇입니까?");
-                Console.WriteLine("1. 전사");
-                Console.WriteLine("2. 마법사");
-                Console.WriteLine("3. 궁수");
-                Console.WriteLine("4. 도적");
-                Console.WriteLine("5. 사제");
-
-                
-                num = InputManager.Instance.ReadLineIntInRange(1, 5);
-            }
-            while (num == -1 || num < 1 || num > 5);
-
-            job = (Job)num - 1;
+            Console.WriteLine("아바타의 직업은 무엇입니까?");
+            Console.WriteLine("1. 전사");
+            Console.WriteLine("2. 마법사");
+            Console.WriteLine("3. 궁수");
+            Console.WriteLine("4. 도적");
+            Console.WriteLine("5. 사제");
+            ViewHelper.PrintDivider();
+            Console.WriteLine();
+            int input = InputManager.ReadLineIntInRange(1, 5);
+            Job job = (Job)input - 1;
             return new Player(name, job);
         }
     }

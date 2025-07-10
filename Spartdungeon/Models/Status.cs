@@ -83,5 +83,10 @@ namespace Spartdungeon.Models
         {
             CurrHealth -= amount;
         }
+
+        public void Heal(float amount)
+        {
+            CurrHealth += amount;
+        }
     }
 }

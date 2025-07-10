@@ -14,72 +14,40 @@ namespace Spartdungeon.Views
     {
         public int ShowDungeonList(List<GameDungeon> dungeons)
         {
-            int input = -1;
 
-            do
+            Console.Clear();
+            ViewHelper.PrintTitle("던전 입장");
+            Console.WriteLine();
+
+            for(int i = 0; i < dungeons.Count; i++)
             {
-                Console.Clear();
-                Console.WriteLine("던전 입장");
-                Console.WriteLine();
-
-                for(int i = 0; i < dungeons.Count; i++)
-                {
-                    GameDungeon dungeon = dungeons[i];
-                    Console.WriteLine($"{i+1}. {dungeon.Name} | 권장 방어력: {dungeon.Difficult}");
-                }
+                GameDungeon dungeon = dungeons[i];
+                Console.WriteLine($"{i+1}. {dungeon.Name} | 권장 방어력: {dungeon.Difficult}");
+            }
                 
-                Console.WriteLine("\n0.나가기");
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
-                Console.Write(">> ");
-                input = InputManager.Instance.ReadLineIntInRange(0, dungeons.Count);
-
-            }
-            while (input == -1 || input < 0 || input > dungeons.Count);
-
-            return input;
+            Console.WriteLine("\n0.나가기");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+            return InputManager.ReadLineIntInRange(0, dungeons.Count);
         }
 
-        public void ClearDungeon(GameDungeon dungeon, DungeonEnterDTO enter, DungeonRewardDTO result)
+        public void ShowDungeonResult(GameDungeon dungeon, DungeonEnterDTO enter, DungeonRewardDTO result)
         {
-            int input = -1;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("던전 클리어!");
-                Console.WriteLine($"{dungeon.Name}을 클리어 하였습니다.");
-                Console.WriteLine();
-                Console.WriteLine("[탐험 결과]");
-                Console.WriteLine($"{enter.PlayerHealth} -> {enter.PlayerHealth - result.ReduceHealth}");
-                Console.WriteLine($"{enter.PlayerMoney} -> {enter.PlayerMoney + result.RewardMoney}");
+            Console.Clear();
+            string text = result.isClear ? "던전 클리어!" : "던전 실패!";
+            ViewHelper.PrintTitle(text);
 
-                Console.WriteLine("\n0.나가기");
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
-                Console.Write(">> ");
-                input = InputManager.Instance.ReadLineIntInRange(0,0);
-            }
-            while (input != 0);
+            text = result.isClear ? $"{dungeon.Name}을 클리어 하였습니다." : $"{dungeon.Name}을 클리어 하지 못했습니다.";
+            Console.WriteLine(text);
+            Console.WriteLine();
+            Console.WriteLine("[탐험 결과]");
+            Console.WriteLine($"{enter.PlayerHealth} -> {enter.PlayerHealth - result.ReduceHealth}");
+            Console.WriteLine($"{enter.PlayerMoney} -> {enter.PlayerMoney + result.RewardMoney}");
 
-        }
-
-        public void FailDungeon(GameDungeon dungeon, DungeonEnterDTO enter, DungeonRewardDTO result)
-        {
-            int input = -1;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("던전 실패!");
-                Console.WriteLine($"{dungeon.Name}을 클리어하지 못했습니다.");
-                Console.WriteLine();
-                Console.WriteLine("[탐험 결과]");
-                Console.WriteLine($"{enter.PlayerHealth} -> {enter.PlayerHealth - result.ReduceHealth}");
-                Console.WriteLine($"{enter.PlayerMoney} -> {enter.PlayerMoney + result.RewardMoney}");
-
-                Console.WriteLine("\n0.나가기");
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
-                Console.Write(">> ");
-                input = InputManager.Instance.ReadLineIntInRange(0,0);
-            }
-            while (input != 0);
+            Console.WriteLine("\n0.나가기");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+            int input = InputManager.ReadLineIntInRange(0,0);
 
         }
     }

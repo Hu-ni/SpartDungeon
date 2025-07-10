@@ -9,7 +9,7 @@ namespace Spartdungeon.Models
 {
     public enum WeaponType
     {
-        Swoard,
+        Sword,
         Spear,
         Bow
     }

@@ -6,25 +6,14 @@ using System.Threading.Tasks;
 
 namespace Spartdungeon.Services
 {
-    public class InputManager
+    public static class InputManager
     {
-        private static InputManager _instance;
-        public static InputManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new InputManager();
-                return _instance;
-            }
-        }
-
-        public string ReadLineString()
+        public static string ReadLineString()
         {
             return Console.ReadLine();
         }
 
-        public int ReadLineInt()
+        public static int ReadLineInt()
         {
             int input;
             if (int.TryParse(Console.ReadLine(), out input))
@@ -32,26 +21,12 @@ namespace Spartdungeon.Services
             return -1;
         }
 
-        public int[] ReadLineIntArray()
+        public static int[] ReadLineIntArray()
         {
             return Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         }
 
-        public void CenterWriteLine(string text)
-        {
-            int consoleWidth = Console.WindowWidth;
-            int padding = (consoleWidth - text.Length) / 2;
-            Console.WriteLine(new string(' ', padding) + text);
-        }
-
-        public void CenterWrite(string text)
-        {
-            int consoleWidth = Console.WindowWidth;
-            int padding = (consoleWidth - text.Length) / 2;
-            Console.Write(new string(' ', padding) + text);
-        }
-
-        public int ReadLineIntInRange(int min, int max)
+        public static int ReadLineIntInRange(int min, int max)
         {
             int value;
             while (true)

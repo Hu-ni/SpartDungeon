@@ -24,6 +24,7 @@ namespace Spartdungeon.Controllers
         private DungeonController dungeonController;
 
         private MainView mainView;
+        private RestView restView;
         public MainController()
         {
             playerDataExists = false;
@@ -32,15 +33,13 @@ namespace Spartdungeon.Controllers
 
             userController = new UserController();
             inventoryController = new InventoryController();
-            shopController = new ShopController(itemList, new List<ShopItem>
-            {
-                new ShopItem { Id = 1, Price = 250},
-                new ShopItem { Id = 2, Price = 10000000 }
-            });
+
+            shopController = new ShopController(itemList);
 
             dungeonController = new DungeonController(dungeonList);
 
             mainView = new MainView();
+            restView = new RestView();
         }
 
         public void Run()
@@ -67,14 +66,25 @@ namespace Spartdungeon.Controllers
             dungeonList.LoadDungeonListFromXml();
             //inventoryController.Initialize(itemList.Items);
 
+            List<ShopItem> items = new List<ShopItem>();
+            List<GameItem> gameItems = itemList.Items.FindAll(x => x.IsSellable);
+            foreach (GameItem item in gameItems)
+            {
+                items.Add(new ShopItem { Id = item.Id, Price = item.Price });
+            }
+
             if (File.Exists(Strings.FILE_PLAYER_PATH))
             {
                 // 플레이어 데이터 불러오기
                 playerDataExists = true;
                 SaveData data = XmlSerializerHelper.Deserialize<SaveData>(Strings.FILE_PLAYER_PATH);
                 inventoryController.Initialize(data.Inventory);
-                shopController.Initialize(data.SoldItemIds);
+                shopController.Initialize(data.SoldItemIds, items);
                 userController.LoadPlayerData(data);
+            }
+            else
+            {
+                shopController.Initialize(items);
             }
         }
 
@@ -107,15 +117,41 @@ namespace Spartdungeon.Controllers
                         GoToShop(Money);
                         break;
                     case 4: // 던전
-                        Player player = userController.GetPlayer();
-                        GoToDungeon(player);
+                        GoToDungeon(userController.GetPlayer());
                         break;
                     case 5: //휴식하기
+                        GoToRest(userController.GetPlayer());
                         break;
                 }
                 
                 PlaySave();
             }
+        }
+
+        private void GoToRest(Player player)
+        {
+            bool exist = false;
+            string message = "";
+            do
+            {
+                int input = restView.Rest(player.Money, message);
+                if(input == 0)
+                    exist = true;
+                if (input == 1)
+                {
+                    if (player.Money < Defines.REST_GOLD)
+                    {
+                        message = "돈이 부족합니다!";
+                        continue;
+                    }
+
+                    player.UseMoney(Defines.REST_GOLD);
+                    userController.RestHealth(Defines.REST_HEAL);
+                    message = "휴식을 완료했습니다.";
+                }
+            }
+            while (!exist);
+
         }
 
         public void GoToInventory(EquipmentSlots slot)

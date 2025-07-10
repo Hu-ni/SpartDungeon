@@ -52,7 +52,7 @@ namespace Spartdungeon.Controllers
                     Exp = 1
                 };
 
-                dungeonView.ClearDungeon(dungeon, dto, result);
+                dungeonView.ShowDungeonResult(dungeon, dto, result);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Spartdungeon.Controllers
                     Exp = 0
                 };
 
-                dungeonView.FailDungeon(dungeon, dto, result);
+                dungeonView.ShowDungeonResult(dungeon, dto, result);
             }
             return result;
 

@@ -98,5 +98,10 @@ namespace Spartdungeon.Models
                     return "무직";
             }
         }
+
+        public void Heal(float result)
+        {
+            Status.Heal(result);
+        }
     }
 }

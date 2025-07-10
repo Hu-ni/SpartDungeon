@@ -20,26 +20,26 @@ namespace Spartdungeon.Views
         /// <returns></returns>
         public int Inventory(List<GameItem> inventory, EquipmentSlots slots)
         {
-            int input;
-            do
+            Console.Clear();
+            ViewHelper.PrintTitle("인벤토리");
+
+            foreach (EquipItem item in inventory)
             {
-                Console.Clear();
-                Console.WriteLine("아이템 목록");
+                if (slots.WeaponSlot?.Id == item.Id || slots.ArmorSlot?.Id == item.Id)
+                    Console.WriteLine($"- [E]{item.Name} | {item.EquipStatusString()} | {item.Description}");
+                else
+                    Console.WriteLine($"- {item.Name} | {item.EquipStatusString()} | {item.Description}");
 
-                foreach (EquipItem item in inventory)
-                {
-                    if (slots.WeaponSlot?.Id == item.Id || slots.ArmorSlot?.Id == item.Id)
-                        Console.WriteLine($"- [E]{item.Name} | {item.EquipStatusString()} | {item.Description}");
-                    else
-                        Console.WriteLine($"- {item.Name} | {item.EquipStatusString()} | {item.Description}");
+            }
 
-                }
-                Console.WriteLine("1. 장착 관리");
-                Console.WriteLine("2. 나가기");
-
-                input = InputManager.Instance.ReadLineIntInRange(1,2);
-            } while (input == -1 || input > 2);
-            return input;
+            Console.WriteLine();
+            ViewHelper.PrintDivider();
+            Console.WriteLine("1. 장착 관리");
+            Console.WriteLine("2. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+            return InputManager.ReadLineIntInRange(1, 2);
         }
 
         /// <summary>
@@ -50,8 +50,6 @@ namespace Spartdungeon.Views
         /// <returns></returns>
         public int Equipment(List<GameItem> inventory, EquipmentSlots slots)
         {
-            int input;
-
             int[] matchingIds = new int[inventory.Count + 1];
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < inventory.Count; i++)
@@ -67,18 +65,20 @@ namespace Spartdungeon.Views
                 }
             }
 
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("장비 목록");
-                Console.WriteLine(sb.ToString());
-                Console.WriteLine();
+            Console.Clear();
 
-                Console.WriteLine("0. 나가기");
+            ViewHelper.PrintTitle("인벤토리 - 장착 관리");
+            Console.WriteLine("[장비 목록]");
 
-                input = InputManager.Instance.ReadLineIntInRange(0, matchingIds.Length);
+            Console.WriteLine(sb.ToString());
+            Console.WriteLine();
 
-            } while (input == -1 || input < 0 || input > matchingIds.Length);
+            ViewHelper.PrintDivider();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+            int input = InputManager.ReadLineIntInRange(0, matchingIds.Length);
 
             return matchingIds[input];
         }

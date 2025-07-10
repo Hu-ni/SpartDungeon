@@ -27,6 +27,15 @@ namespace Spartdungeon.Controllers
 
         private ShopView _shopView;
 
+        public ShopController(ItemList itemList)
+        {
+            this.itemList = itemList;
+            this.shopItems = new List<ShopItem>();
+
+            _shopView = new ShopView();
+            soldItemIds = new List<int>();
+        }
+
         public ShopController(ItemList itemList, List<ShopItem> shopItems)
         {
             this.itemList = itemList;
@@ -36,10 +45,18 @@ namespace Spartdungeon.Controllers
             soldItemIds = new List<int>();
         }
         
-        public void Initialize(List<int> ids)
+        public void Initialize(List<ShopItem> shopItems)
+        {
+            this.shopItems.Clear();
+            this.shopItems.AddRange(shopItems);
+        }
+
+        public void Initialize(List<int> ids, List<ShopItem> shopItems)
         {
             soldItemIds.Clear();
             soldItemIds.AddRange(ids);
+            this.shopItems.Clear();
+            this.shopItems.AddRange(shopItems);
         }
 
         public int ShowShopItems(int money)
@@ -80,7 +97,7 @@ namespace Spartdungeon.Controllers
                 }
 
                 soldItemIds.Add(id);
-                ViewHelper.ShowMessage("구매가 완료되었습니다!");
+                ViewHelper.PrintNotification("구매가 완료되었습니다!");
                 return (ShopBuyResult.Success, id);
             }
         }

@@ -125,5 +125,16 @@ namespace Spartdungeon.Controllers
         {
             player.GainMoney(money);
         }
+
+        public void RestHealth(float heal)
+        {
+            float result = heal;
+            if(player.Status.CurrHealth + heal > player.Status.MaxHealth)
+            {
+                result -= (player.Status.CurrHealth + heal) - player.Status.MaxHealth ;
+                result = Math.Max(0, result);
+            }
+            player.Heal(result);
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace Spartdungeon.Controllers
                     ItemIds = random.Next(0, 100) < 10 ? dungeon.ItemIds : null,
                     ReduceHealth = CalculateHealth(Math.Abs(dto.PlayerDefense - dungeon.Difficult)),
                     RewardMoney = CalculateRewardGold(dto.PlayerAttack, dungeon.Gold),
-                    Exp = CalculateRewardGold(dto.PlayerAttack, Math.Min(dungeon.Difficult/10,Defines.CLEAR_EXP))
+                    Exp = CalculateRewardGold(dto.PlayerAttack, Math.Max(dungeon.Difficult/10,Defines.CLEAR_EXP))
                 };
 
                 dungeonView.ShowDungeonResult(dungeon, dto, result);

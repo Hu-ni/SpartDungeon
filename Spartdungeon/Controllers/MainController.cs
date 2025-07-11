@@ -125,9 +125,7 @@ namespace Spartdungeon.Controllers
                     case 5: //휴식하기
                         GoToRest(userController.GetPlayer());
                         break;
-                }
-                
-                PlaySave();
+                }   
             }
         }
 
@@ -149,6 +147,7 @@ namespace Spartdungeon.Controllers
                     player.UseMoney(Defines.REST_GOLD);
                     userController.RestHealth(Defines.REST_HEAL);
                     message = "휴식을 완료했습니다.";
+                    PlaySave();
                 }
             }
         }
@@ -180,6 +179,7 @@ namespace Spartdungeon.Controllers
                             else if (item is ArmorItem armor)
                                 userController.EquipArmor(armor);
                         }
+                        PlaySave();
                     }
 
                 }
@@ -209,13 +209,14 @@ namespace Spartdungeon.Controllers
                             continue;
 
                         // 아이템 구매 처리
-                        GameItem item = itemList.GetItemByID(dto.ItemId);
-                        item.Price = dto.Price;
+                        GameItem? item = itemList.GetItemByID(dto.ItemId);
                         if (item != null)
                         {
+                            item.Price = dto.Price;
                             inventoryController.AddItem(item);
                             userController.UseMoney(dto.Price);
                         }
+                        PlaySave();
                     }
                 }
                 if(input == 2)
@@ -224,7 +225,7 @@ namespace Spartdungeon.Controllers
                     if (dto.ItemId == 0)
                         continue;
 
-                    GameItem? item = inventoryController.Inventory.Find(x => x.Id == dto.ItemId);
+                    GameItem? item = inventoryController.GetItem(dto.ItemId);
                     if (item != null)
                     {
                         if(userController.IsEquipmented(item))
@@ -239,6 +240,7 @@ namespace Spartdungeon.Controllers
                     }
                 }
                 playerMoney = userController.GetPlayer().Money;
+                PlaySave();
             }
         }
 
@@ -268,10 +270,12 @@ namespace Spartdungeon.Controllers
                     {
                         foreach(int id in result.ItemIds)
                         {
-                            GameItem item = itemList.GetItemByID(id);
-                            inventoryController.AddItem(item);
+                            GameItem? item = itemList.GetItemByID(id);
+                            if(item != null)
+                                inventoryController.AddItem(item);
                         }
                     }
+                    PlaySave();
                 }
             }
         }

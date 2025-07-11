@@ -20,6 +20,7 @@ namespace Spartdungeon.Models
         // 3. 아이템이 있는지 확인하기
         [XmlElement("Item")]
         public List<GameItem> Items { get; private set; }
+        private Dictionary<int, GameItem> itemMap = new Dictionary<int, GameItem>();
 
         public ItemList()
         {
@@ -29,12 +30,13 @@ namespace Spartdungeon.Models
         public void LoadItemListFromXml()
         {
             Items = XmlSerializerHelper.Deserialize<ItemList>(Strings.FILE_ITEM_PATH).Items;
+            itemMap = Items.ToDictionary(item => item.Id);
         }
 
-        public GameItem GetItemByID(int id)
-        {
-            return Items.FirstOrDefault(x => x.Id == id);
-        }
-
+        //public GameItem? GetItemByID(int id)
+        //{
+        //    return Items.FirstOrDefault(x => x.Id == id);
+        //}
+        public GameItem? GetItemByID(int id) => itemMap.ContainsKey(id) ? itemMap[id] : null;
     }
 }

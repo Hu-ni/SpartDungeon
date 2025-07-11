@@ -54,6 +54,8 @@ namespace Spartdungeon.Controllers
         public EquipItem? EquipmentItem(EquipmentSlots slots)
         {
             int id = inventoryView.Equipment(Inventory, slots);
+            if(id == 0)
+                return null;
             EquipItem? equipItem = Inventory.FirstOrDefault(x => x.Id == id) as EquipItem;
             return equipItem;
         }

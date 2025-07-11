@@ -11,5 +11,6 @@ namespace Spartdungeon.Services
     {
         public static int REST_GOLD = 500;
         public static int REST_HEAL = 100;
+        public static int CLEAR_EXP = 1;
     }
 }

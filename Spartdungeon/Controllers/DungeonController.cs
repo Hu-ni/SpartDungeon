@@ -1,5 +1,6 @@
 ﻿using Spartdungeon.DTOs;
 using Spartdungeon.Models;
+using Spartdungeon.Services;
 using Spartdungeon.Views;
 using System;
 using System.Collections.Generic;
@@ -45,13 +46,15 @@ namespace Spartdungeon.Controllers
             DungeonRewardDTO result;
             if (CalculateClear(dto.PlayerDefense, dungeon.Difficult))
             {
+                
+
                 result = new DungeonRewardDTO
                 {
                     isClear = true,
-                    ItemIds = null,
+                    ItemIds = random.Next(0, 100) < 10 ? dungeon.ItemIds : null,
                     ReduceHealth = CalculateHealth(Math.Abs(dto.PlayerDefense - dungeon.Difficult)),
                     RewardMoney = CalculateRewardGold(dto.PlayerAttack, dungeon.Gold),
-                    Exp = 1
+                    Exp = CalculateRewardGold(dto.PlayerAttack, Math.Min(dungeon.Difficult/10,Defines.CLEAR_EXP))
                 };
 
                 dungeonView.ShowDungeonResult(dungeon, dto, result);

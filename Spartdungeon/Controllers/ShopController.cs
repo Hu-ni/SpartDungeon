@@ -69,9 +69,9 @@ namespace Spartdungeon.Controllers
         public (ShopBuyResult, int) BuyItemAtShop(int playerMoney)
         {
             string text = "";
+            List<ShopItemDTO> dto = CreateShopDTO();
             while (true)
             {
-                List<ShopItemDTO> dto = CreateShopDTO();
                 int id = _shopView.BuyItemShop(dto, playerMoney, text);
 
                 if (id == 0)
@@ -113,7 +113,16 @@ namespace Spartdungeon.Controllers
                     Count = 0
                 };
 
-            int price = (int)(inventory.Find(x => x.Id == id).Price * 0.85);
+            GameItem? item = inventory.Find(x => x.Id == id);
+            if(item == null)
+                return new SellItemDTO
+                {
+                    ItemId = 0,
+                    Price = 0,
+                    Count = 0
+                };
+
+            int price = (int)(item.Price * 0.85);
             soldItemIds.Remove(id);
             SellItemDTO sellItemDTO = new SellItemDTO
             {
@@ -129,7 +138,9 @@ namespace Spartdungeon.Controllers
             List<ShopItemDTO> result = new List<ShopItemDTO>();
             foreach (ShopItem shopitem in shopItems)
             {
-                GameItem item = itemList.GetItemByID(shopitem.Id);
+                GameItem? item = itemList.GetItemByID(shopitem.Id);
+                if (item == null)
+                    continue;
                 result.Add(new ShopItemDTO
                 {
                     ItemId = shopitem.Id,

@@ -24,7 +24,7 @@ namespace Spartdungeon
              * 흐름을 시작해줄 Controller가 필요함.
              * 입력에 따라 User, Dungeon, Shop로 이동
             */
-            //while(true){ }
+            /*while(true){ }
             //var myItemList = new ItemList();
             //myItemList.Items.Add(new WeaponItem { Id = 1, Name = "Sword of Valor", Description = "강력한 검입니다.", IsSellable = true, Status = new ItemStatus() { Attack = 15, Defense = 2 }, Price = 250, Type = WeaponType.Swoard });
 
@@ -72,7 +72,7 @@ namespace Spartdungeon
             //using (var fs = new FileStream("Dungeon.xml", FileMode.Create))
             //{
             //    serializer.Serialize(fs, myDungeonList, ns);
-            //}
+            //}*/
             MainController main = new MainController();
             main.Run();
             return;

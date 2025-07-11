@@ -42,6 +42,9 @@ namespace Spartdungeon.Controllers
             restView = new RestView();
         }
 
+        /// <summary>
+        /// 초기화 후 데이터에 따라 인트로 스킵
+        /// </summary>
         public void Run()
         {
             Initialize();
@@ -130,13 +133,11 @@ namespace Spartdungeon.Controllers
 
         private void GoToRest(Player player)
         {
-            bool exist = false;
             string message = "";
-            do
-            {
+            while(true) {
                 int input = restView.Rest(player.Money, message);
-                if(input == 0)
-                    exist = true;
+                if (input == 0)
+                    break;
                 if (input == 1)
                 {
                     if (player.Money < Defines.REST_GOLD)
@@ -150,38 +151,36 @@ namespace Spartdungeon.Controllers
                     message = "휴식을 완료했습니다.";
                 }
             }
-            while (!exist);
-
         }
 
         public void GoToInventory(EquipmentSlots slot)
         {
-            bool exist = false;
-            while(!exist)
+            while(true)
             {
                 int input = inventoryController.InventoryList(slot);
-                if(input == 2)
-                    exist = true;
+                if (input == 2)
+                    break;
 
                 if(input == 1)
                 {
                     EquipItem? item = inventoryController.EquipmentItem(slot);
-                    
-                    if(slot.IsEquipped(item))
+                    if (item != null)
                     {
-                        if (item is WeaponItem weapon)
-                            userController.UnEquipWeapon();
-                        else if (item is ArmorItem armor)
-                            userController.UnEquipArmor();
+                        if (slot.IsEquipped(item))
+                        {
+                            if (item is WeaponItem weapon)
+                                userController.UnEquipWeapon();
+                            else if (item is ArmorItem armor)
+                                userController.UnEquipArmor();
+                        }
+                        else
+                        {
+                            if (item is WeaponItem weapon)
+                                userController.EquipWeapon(weapon);
+                            else if (item is ArmorItem armor)
+                                userController.EquipArmor(armor);
+                        }
                     }
-                    else
-                    {
-                        if (item is WeaponItem weapon)
-                            userController.EquipWeapon(weapon);
-                        else if (item is ArmorItem armor)
-                            userController.EquipArmor(armor);
-                    }
-
 
                 }
             }
@@ -190,12 +189,11 @@ namespace Spartdungeon.Controllers
         public void GoToShop(int Money)
         {
             int playerMoney = Money;
-            bool exists = false;
-            while(!exists)
+            while(true)
             {
                 int input = shopController.ShowShopItems(playerMoney);
                 if (input == 0)
-                    exists = true;
+                    break;
 
                 if (input == 1)
                 {
@@ -246,12 +244,11 @@ namespace Spartdungeon.Controllers
 
         public void GoToDungeon(Player player)
         {
-            bool exists = false;
-            while(!exists)
+            while(true)
             {
                 int input = dungeonController.ShowDungeonList();
-                if(input == 0)
-                    exists = true;
+                if (input == 0)
+                    break;
 
                 DungeonEnterDTO dto = new DungeonEnterDTO
                 {

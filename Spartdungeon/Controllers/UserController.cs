@@ -85,11 +85,6 @@ namespace Spartdungeon.Controllers
             slots.UnEquipWeapon();
         }
 
-        public void UpdateUserInfo(Player player)
-        {
-            throw new NotImplementedException();
-        }
-
         public int UserInfo()
         {
             return userInfoView.PrintUserInfo(player);

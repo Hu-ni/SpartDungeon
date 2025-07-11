@@ -13,6 +13,8 @@ namespace Spartdungeon.Controllers
     {
         private DungeonList dungeonList;
         private DungeonView dungeonView;
+
+        private readonly Random random = new Random();
         public DungeonController(DungeonList dungeonList) 
         {
             this.dungeonList = dungeonList;
@@ -73,16 +75,14 @@ namespace Spartdungeon.Controllers
 
         private float CalculateHealth(float abs)
         {
-            Random rnd = new Random();
-            return rnd.Next(25, 30) - abs;
+            return random.Next(25, 30) - abs;
         }
         
         private bool CalculateClear(float playerDefense, float dungeonDefense)
         {
             if (playerDefense > dungeonDefense) return true;
 
-            Random rand = new Random();
-            return rand.Next(0, 100) < 40;
+            return random.Next(0, 100) < 40;
         }
 
         private int CalculateRewardGold(float playerAttack, int baseReward)

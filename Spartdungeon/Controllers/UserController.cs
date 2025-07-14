@@ -131,5 +131,10 @@ namespace Spartdungeon.Controllers
             }
             player.Heal(result);
         }
+
+        public bool isDied()
+        {
+            return player.Status.CurrHealth <= 0;
+        }
     }
 }

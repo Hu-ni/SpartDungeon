@@ -70,5 +70,10 @@ namespace Spartdungeon.Views
 
             return InputManager.ReadLineIntInRange(1, 5);
         }
+
+        public void Die()
+        {
+            Console.Clear(); Console.WriteLine("이걸 죽네 ㅋ");
+        }
     }
 }

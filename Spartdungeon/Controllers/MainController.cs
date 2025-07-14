@@ -105,6 +105,11 @@ namespace Spartdungeon.Controllers
             // 마을로 이동!
             while (true)
             {
+                if(userController.isDied())
+                {
+                    mainView.Die();
+                    break;
+                }
                 int input = mainView.Home();
                 switch (input)
                 {
